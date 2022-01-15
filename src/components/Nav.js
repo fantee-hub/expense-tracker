@@ -10,8 +10,8 @@ const Nav = () => {
       </div>
 
       <div className="nav-links">
-        <button className="login">Login</button>
-        <button className="signup">Sign up</button>
+        <button className="login">LOGIN</button>
+        <button className="signup">SIGN UP</button>
       </div>
     </NavBar>
   );
@@ -23,12 +23,22 @@ const NavBar = styled.nav`
   align-items: center;
   padding: 1rem 3rem;
 
-  .nav-links{
-      button{
-          padding:.7rem 1rem;
-      }
+  .nav-links {
+    button {
+      padding: 0.5rem 0.7rem;
+      margin-right: 0.7rem;
+      border: none;
+      cursor: pointer;
+      color: #000000;
+    }
+    .login {
+      background: #ffffff;
+    }
+    .signup {
+      background: #4ce895;
+      border-radius: 0.6rem;
+    }
   }
 `;
-
 
 export default Nav;

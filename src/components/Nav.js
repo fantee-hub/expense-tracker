@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import logo from "../images/logo.svg";
+import { Link } from "react-router-dom";
 
 const Nav = () => {
   return (
@@ -10,8 +11,12 @@ const Nav = () => {
       </div>
 
       <div className="nav-links">
-        <button className="login">LOGIN</button>
-        <button className="signup">SIGN UP</button>
+        <Link to="/login">
+          <button className="login">LOGIN</button>
+        </Link>
+        <Link to="/signup">
+          <button className="signup">SIGN UP</button>
+        </Link>
       </div>
     </NavBar>
   );

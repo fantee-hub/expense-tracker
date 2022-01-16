@@ -1,18 +1,22 @@
 import React from "react";
 import styled from "styled-components";
 import home from "../images/home.svg";
+import Nav from "../components/Nav";
 
 const Home = () => {
   return (
-    <HomeContainer>
-      <div className="image-container">
-        <img src={home} alt="illustration" />
-      </div>
-      <div className="home-contents">
-        <h1>Fundall Expense Tracker</h1>
-        <h2>Mini Project Frontend</h2>
-      </div>
-    </HomeContainer>
+    <>
+      <Nav />
+      <HomeContainer>
+        <div className="image-container">
+          <img src={home} alt="illustration" />
+        </div>
+        <div className="home-contents">
+          <h1>Fundall Expense Tracker</h1>
+          <h2>Mini Project Frontend</h2>
+        </div>
+      </HomeContainer>
+    </>
   );
 };
 

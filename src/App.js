@@ -1,7 +1,6 @@
 import React from "react";
 import Home from "./components/Home";
 import Globalstyles from "./styles/Globalstyles";
-
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import { Routes, Route } from "react-router-dom";

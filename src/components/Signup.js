@@ -1,10 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../images/logo.svg";
 import home from "../images/home.svg";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Signup = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const signUpHandler = (e) => {
+    e.preventDefault();
+
+    const data = {
+      firstname: firstName,
+      lastname: lastName,
+      email,
+      password,
+      password_confirmation: confirmPassword,
+    };
+
+    console.log(data);
+
+    axios({
+      method: "POST",
+      url: "https://campaign.fundall.io/api/v1/register",
+      header: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      data,
+    })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
   return (
     <SignupContainer>
       <div className="row1">
@@ -26,7 +59,7 @@ const Signup = () => {
       </div>
       <div className="row1">
         <div className="form-container">
-          <form>
+          <form onSubmit={signUpHandler}>
             <div className="input1">
               <span>
                 <label htmlFor="fname">First Name</label>
@@ -34,24 +67,43 @@ const Signup = () => {
                   type="text"
                   placeholder="Enter First Name"
                   name="fname"
+                  onChange={(e) => setFirstName(e.target.value)}
                 />
               </span>
               <span>
                 <label htmlFor="lname">Last Name</label>
-                <input type="text" placeholder="Enter Last Name" name="lname" />
+                <input
+                  type="text"
+                  placeholder="Enter Last Name"
+                  name="lname"
+                  onChange={(e) => setLastName(e.target.value)}
+                />
               </span>
             </div>
             <div className="input2">
               <label htmlFor="email">Email address</label>
-              <input type="email" placeholder="Enter Email" name="email" />
+              <input
+                type="email"
+                placeholder="Enter Email"
+                name="email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
             <div className="input3">
               <label htmlFor="pword">Password</label>
-              <input type="password" placeholder="Enter Password" />
+              <input
+                type="password"
+                placeholder="Enter Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
             <div className="input4">
               <label htmlFor="cpword">Confirm Password</label>
-              <input type="password" placeholder="Confirm Password" />
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
             </div>
             <div className="signupBtn">
               <button type="submit">SIGN UP</button>

@@ -1,10 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import illustration from "../images/illustration2.svg";
 import logo from "../images/logo.svg";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const loginHandler = (e) => {
+    e.preventDefault();
+
+    const data = {
+      email,
+      password,
+    };
+
+    console.log(data);
+
+    axios({
+      method: "POST",
+      url: "https://campaign.fundall.io/api/v1/login",
+      header: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      data,
+    })
+      .then((res) =>
+        localStorage.setItem("token", res.success.user.access_token)
+      )
+      .catch((err) => console.log(err));
+  };
+
   return (
     <LoginContainer>
       <div className="row1">
@@ -27,13 +56,14 @@ const Login = () => {
             <h1>Holla</h1>
             <p>Sign in to the vibe!</p>
           </div>
-          <form>
+          <form onSubmit={loginHandler}>
             <div className="input1">
               <label htmlFor="email">Email or Username</label>
               <input
                 type="text"
                 name="email"
                 placeholder="Enter Email or Username"
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="input2">
@@ -42,6 +72,7 @@ const Login = () => {
                 type="password"
                 name="pword"
                 placeholder="Enter Password"
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div className="loginBtn">

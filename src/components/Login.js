@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import illustration from "../images/illustration2.svg";
 import logo from "../images/logo.svg";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+
 import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLogged, setIsLogged] = useState(false);
+  const [error, setError] = useState("");
 
   const loginHandler = (e) => {
     e.preventDefault();
@@ -28,12 +31,16 @@ const Login = () => {
       },
       data,
     })
-      .then((res) =>
-        localStorage.setItem("token", res.success.user.access_token)
-      )
-      .catch((err) => console.log(err));
+      .then((res) => {
+        localStorage.setItem("token", res.data.success.user.access_token);
+        setIsLogged(true);
+      })
+      .catch((err) => setError(err.response.data.error.message));
   };
 
+  if (isLogged) {
+    return <Navigate to="/dashboard" />;
+  }
   return (
     <LoginContainer>
       <div className="row1">
@@ -57,6 +64,7 @@ const Login = () => {
             <p>Sign in to the vibe!</p>
           </div>
           <form onSubmit={loginHandler}>
+            {error && <div className="error">{error}</div>}
             <div className="input1">
               <label htmlFor="email">Email or Username</label>
               <input
@@ -76,7 +84,9 @@ const Login = () => {
               />
             </div>
             <div className="loginBtn">
-              <button type="submit">LOGIN</button>
+              <button type="submit" disabled={isLogged}>
+                LOGIN
+              </button>
             </div>
             <div className="form-text">
               Don't have an account?
@@ -135,6 +145,13 @@ const LoginContainer = styled.div`
       label {
         display: block;
         margin: 0 0 0.6rem 0;
+      }
+      .error {
+        background: red;
+        width: 96%;
+        padding: 0.6rem 0 0.6rem 1rem;
+        color: white;
+        border-radius: 0.25rem;
       }
       .input1 {
         padding: 1rem 0;

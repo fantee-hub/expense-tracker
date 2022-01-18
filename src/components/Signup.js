@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import logo from "../images/logo.svg";
 import home from "../images/home.svg";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 
 const Signup = () => {
@@ -11,6 +11,7 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isSignup, setIsSignUp] = useState(false);
 
   const signUpHandler = (e) => {
     e.preventDefault();
@@ -34,9 +35,15 @@ const Signup = () => {
       },
       data,
     })
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        setIsSignUp(true);
+      })
       .catch((err) => console.log(err));
   };
+  if (isSignup) {
+    return <Navigate to="/dashboard" />;
+  }
 
   return (
     <SignupContainer>

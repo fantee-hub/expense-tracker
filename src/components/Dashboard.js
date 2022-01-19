@@ -5,9 +5,8 @@ import avi from "../images/Vector.png";
 import bar from "../images/bar.svg";
 import welcome from "../images/welcome.svg";
 import { v4 as uuidv4 } from "uuid";
-import { Link } from "react-router-dom";
 
-const Dashboard = ({ user, setUser, isLoading }) => {
+const Dashboard = ({ user, isLoading }) => {
   const [expense1, setExpense1] = useState(0);
   const [expense2, setExpense2] = useState(0);
   const [expense3, setExpense3] = useState(0);

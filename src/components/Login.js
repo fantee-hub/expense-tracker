@@ -35,7 +35,12 @@ const Login = () => {
         localStorage.setItem("token", res.data.success.user.access_token);
         setIsLogged(true);
       })
-      .catch((err) => setError(err.response.data.error.message));
+      .catch((err) => {
+        setError(err.response.data.error.message);
+        setTimeout(function () {
+          setError("");
+        }, 5000);
+      });
   };
 
   if (isLogged) {
@@ -57,7 +62,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <div className="row1">
+      <div className="row2">
         <div className="form-container">
           <div className="form-header">
             <h1>Holla</h1>
@@ -136,7 +141,7 @@ const LoginContainer = styled.div`
     margin: 2rem 0 0 0;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.082937);
     padding: 1.5rem 4rem;
-    width: 25rem;
+
     .form-header {
       padding: 1rem 0;
     }
@@ -198,6 +203,24 @@ const LoginContainer = styled.div`
           font-weight: 600;
         }
       }
+    }
+  }
+  @media screen and (max-width: 760px) {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    .row1 {
+      .home-image {
+        display: none;
+      }
+    }
+    .form-container {
+      padding: 1rem;
+    }
+  }
+  @media screen and (min-width: 765px) and (max-width: 900px) {
+    .form-container {
+      padding: 1.5rem 2rem;
     }
   }
 `;

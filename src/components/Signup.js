@@ -12,6 +12,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isSignup, setIsSignUp] = useState(false);
+  const [error, setError] = useState("");
 
   const signUpHandler = (e) => {
     e.preventDefault();
@@ -39,7 +40,12 @@ const Signup = () => {
         console.log(res);
         setIsSignUp(true);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setError(err.response.data.error.message);
+        setTimeout(function () {
+          setError("");
+        }, 5000);
+      });
   };
   if (isSignup) {
     return <Navigate to="/login" />;
@@ -48,9 +54,11 @@ const Signup = () => {
   return (
     <SignupContainer>
       <div className="row1">
-        <div className="logo">
-          <img src={logo} alt="fundall logo" />
-        </div>
+        <Link to="/">
+          <div className="logo">
+            <img src={logo} alt="fundall logo" />
+          </div>
+        </Link>
         <div className="home-image">
           <div className="hero-image">
             <img src={home} alt="illustration" />
@@ -64,9 +72,10 @@ const Signup = () => {
           </div>
         </div>
       </div>
-      <div className="row1">
+      <div className="row2">
         <div className="form-container">
           <form onSubmit={signUpHandler}>
+            {error && <div className="error">{error}</div>}
             <div className="input1">
               <span>
                 <label htmlFor="fname">First Name</label>
@@ -164,6 +173,13 @@ const SignupContainer = styled.div`
     margin: 1rem 0 0 0;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.082937);
     padding: 1.5rem 4rem;
+    .error {
+      background: red;
+      width: 96%;
+      padding: 0.6rem 0 0.6rem 1rem;
+      color: white;
+      border-radius: 0.25rem;
+    }
     form {
       margin: 0 auto;
       label {
@@ -223,6 +239,35 @@ const SignupContainer = styled.div`
     span {
       color: #4de897;
       font-weight: 600;
+    }
+  }
+  @media screen and (max-width: 760px) {
+    display: flex;
+    flex-direction: column;
+    column-gap: 1rem;
+    padding: 1rem;
+    .row1 {
+      .home-image {
+        display: none;
+      }
+    }
+    .form-container {
+      padding: 1rem;
+      form {
+        .input1 {
+          display: flex;
+          flex-direction: column;
+          row-gap: 1rem;
+          input[type="text"] {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  @media screen and (min-width: 765px) and (max-width: 1024px) {
+    .form-container {
+      padding: 1rem 1.4rem;
     }
   }
 `;

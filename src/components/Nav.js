@@ -44,6 +44,9 @@ const NavBar = styled.nav`
       border-radius: 0.6rem;
     }
   }
+  @media screen and (max-width: 700px) {
+    padding: 1rem;
+  }
 `;
 
 export default Nav;

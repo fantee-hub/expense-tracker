@@ -42,7 +42,7 @@ const Signup = () => {
       .catch((err) => console.log(err));
   };
   if (isSignup) {
-    return <Navigate to="/dashboard" />;
+    return <Navigate to="/login" />;
   }
 
   return (

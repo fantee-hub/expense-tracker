@@ -7,7 +7,7 @@ import welcome from "../images/welcome.svg";
 import { v4 as uuidv4 } from "uuid";
 import { Link } from "react-router-dom";
 
-const Dashboard = ({ user, setUser }) => {
+const Dashboard = ({ user, setUser, isLoading }) => {
   const [expense1, setExpense1] = useState(0);
   const [expense2, setExpense2] = useState(0);
   const [expense3, setExpense3] = useState(0);
@@ -17,6 +17,8 @@ const Dashboard = ({ user, setUser }) => {
   const [daily, setDaily] = useState([]);
   const [dailyAmount, setDailyAmount] = useState([]);
   const [total, setTotal] = useState(0);
+
+  console.log(user);
 
   const expenseHander = (e) => {
     e.preventDefault();
@@ -30,29 +32,22 @@ const Dashboard = ({ user, setUser }) => {
 
     setMonthlyTarget(target);
   };
-  const handleLogout = () => {
-    localStorage.clear();
-    setUser(null);
-  };
 
   return (
     <>
-      {user && (
+      {isLoading && (
         <DashboardContainer>
           <div className="row">
             <div className="logo">
               <img src={logo} alt="fundall logo" />
-              <Link to="/">
-                <button onClick={handleLogout}>Logout</button>
-              </Link>
             </div>
             <div className="userContainer">
               <div className="userImage">
-                <img src={avi} alt={user.users.firstname} />
+                <img src={avi} alt={user.firstname} />
               </div>
               <div className="username">
-                <h3>{`${user.users.firstname} ${user.users.lastname}`}</h3>
-                <p>{user.users.email}</p>
+                <h3>{`${user.firstname} ${user.lastname}`}</h3>
+                <p>{user.email}</p>
               </div>
             </div>
             <div className="expense">
@@ -90,7 +85,7 @@ const Dashboard = ({ user, setUser }) => {
             <div className="welcome-container">
               <div className="welcome-content">
                 <span className="welcome">Welcome back,</span>{" "}
-                <span className="name">{user.users.firstname}</span>
+                <span className="name">{user.firstname}</span>
                 <p>Now, let’s get your expenses for this month</p>
               </div>
               <div className="vector-img">
@@ -176,14 +171,9 @@ const DashboardContainer = styled.div`
   padding: 2rem 5rem;
   .row {
     .logo {
-        display:flex;
-        justify-content:space-between;
-        button{
-            border:none;
-            padding:.6rem;
-            background:#4de897;
-            cursor:pointer;
-        }
+      display: flex;
+      justify-content: space-between;
+
       padding: 0 0 1rem 0;
     }
     .userContainer {
@@ -336,50 +326,47 @@ const DashboardContainer = styled.div`
     display: flex;
     flex-direction: column;
     padding: 1rem;
-    .row2{
-        .input-container {
-            padding: 1rem 0.8rem 0 0;
-          form {
-                .input1 {
-                    input[type="number"],
-                    input[type="date"] {
-                        width: 100% ;
-                    
-                    }
-                
-                }
-                .input2{
-                    .expense-input{
-                        input[type='text']{
-                            width:100%;
-                        }
-                        input[type="number"]{
-                            width:100%;
-                            margin-left:0;
-                        }
-                        
-                    }
-                    .total{
-                            display:flex;
-                            flex-direction:column;
-                            column-gap:.6rem;
-                        }
-                }
+    .row2 {
+      .input-container {
+        padding: 1rem 0.8rem 0 0;
+        form {
+          .input1 {
+            input[type="number"],
+            input[type="date"] {
+              width: 100%;
             }
-            
-       }
-       
-        .welcome-container {
-            .vector-img {
-             display:none;
+          }
+          .input2 {
+            .expense-input {
+              input[type="text"] {
+                width: 100%;
+              }
+              input[type="number"] {
+                width: 100%;
+                margin-left: 0;
+              }
             }
-       }
-       
-       
-      
-    }
+            .total {
+              display: flex;
+              flex-direction: column;
+              column-gap: 0.6rem;
+            }
+          }
+        }
+      }
 
-  
-    
+      .welcome-container {
+        .vector-img {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @media screen and (min-width: 1025px) {
+    .row2 {
+      width: 40rem;
+    }
+  }
 `;
 export default Dashboard;

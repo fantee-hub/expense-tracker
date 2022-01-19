@@ -6,7 +6,7 @@ import { Link, Navigate } from "react-router-dom";
 
 import axios from "axios";
 
-const Login = () => {
+const Login = ({ setUsers }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLogged, setIsLogged] = useState(false);
@@ -34,6 +34,7 @@ const Login = () => {
       .then((res) => {
         localStorage.setItem("token", res.data.success.user.access_token);
         setIsLogged(true);
+        setUsers(res.data.success.data);
       })
       .catch((err) => {
         setError(err.response.data.error.message);

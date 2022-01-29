@@ -32,9 +32,11 @@ const Login = ({ setUsers }) => {
       data,
     })
       .then((res) => {
-        localStorage.setItem("token", res.data.success.user.access_token);
-        setIsLogged(true);
+        const token = res.data.success.user.access_token;
+        localStorage.setItem("token", token);
+        axios.defaults.headers.common["Authorization"] = "Bearer " + token;
         setUsers(res.data.success.data);
+        setIsLogged(true);
       })
       .catch((err) => {
         setError(err.response.data.error.message);
